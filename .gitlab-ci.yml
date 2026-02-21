@@ -1,26 +1,49 @@
 stages:
+  - lint
   - test
   - build
   - deploy
 
 variables:
-  NODE_VERSION: "20"
+  NODE_VERSION: "22.20.0"
 
 .node_template: &node_template
   image: node:${NODE_VERSION}
+  before_script:
+    - npm install -g pnpm
+    - pnpm install --frozen-lockfile
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - node_modules/
-      - apps/*/node_modules/
-      - packages/*/node_modules/
+      - .pnpm-store/
+
+format:
+  <<: *node_template
+  stage: lint
+  script:
+    - pnpm run format:check
+  allow_failure: false
+  only:
+    - merge_requests
+    - main
 
 lint:
   <<: *node_template
-  stage: test
+  stage: lint
   script:
-    - npm install
-    - npm run lint
+    - pnpm run lint
+  allow_failure: false
+  only:
+    - merge_requests
+    - main
+
+typecheck:
+  <<: *node_template
+  stage: lint
+  script:
+    - pnpm run typecheck
+  allow_failure: false
   only:
     - merge_requests
     - main
@@ -29,14 +52,17 @@ test:
   <<: *node_template
   stage: test
   script:
-    - npm install
-    - npm run test
-  coverage: '/Lines\s*:\s*(\d+\.\d+)%/'
+    - pnpm run test:coverage
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   artifacts:
     reports:
+      junit: coverage/junit.xml
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
+    paths:
+      - coverage/
+    expire_in: 30 days
   only:
     - merge_requests
     - main
@@ -45,16 +71,21 @@ build:
   <<: *node_template
   stage: build
   script:
-    - npm install
-    - npm run build
+    - pnpm run build
   artifacts:
     paths:
       - apps/*/dist/
       - apps/*/.next/
+      - apps/*/.wrangler/
     expire_in: 1 hour
   only:
     - main
     - tags
+  needs:
+    - format
+    - lint
+    - typecheck
+    - test
 
 deploy:api:
   stage: deploy

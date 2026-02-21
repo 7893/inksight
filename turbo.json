@@ -3,7 +3,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", ".vercel/**"]
+      "outputs": ["dist/**", ".next/**", ".vercel/**", ".wrangler/**"]
     },
     "deploy": {
       "dependsOn": ["build"],
@@ -16,7 +16,15 @@
     "lint": {
       "outputs": []
     },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
     "test": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"]
+    },
+    "test:coverage": {
       "dependsOn": ["build"],
       "outputs": ["coverage/**"]
     }
