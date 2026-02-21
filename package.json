@@ -1,0 +1,20 @@
+{
+  "name": "inksight",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Intelligent Email Intelligence Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "deploy": "turbo run deploy"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

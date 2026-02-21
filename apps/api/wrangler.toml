@@ -1,0 +1,24 @@
+name = "inksight-api"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "inksight-api"
+workers_dev = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "inksight"
+database_id = "TBD"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "inksight-embeddings"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "inksight-emails"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "TBD"

@@ -1,0 +1,111 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  NODE_VERSION: "20"
+
+.node_template: &node_template
+  image: node:${NODE_VERSION}
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - apps/*/node_modules/
+      - packages/*/node_modules/
+
+lint:
+  <<: *node_template
+  stage: test
+  script:
+    - npm install
+    - npm run lint
+  only:
+    - merge_requests
+    - main
+
+test:
+  <<: *node_template
+  stage: test
+  script:
+    - npm install
+    - npm run test
+  coverage: '/Lines\s*:\s*(\d+\.\d+)%/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+  only:
+    - merge_requests
+    - main
+
+build:
+  <<: *node_template
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - apps/*/dist/
+      - apps/*/.next/
+    expire_in: 1 hour
+  only:
+    - main
+    - tags
+
+deploy:api:
+  stage: deploy
+  image: node:${NODE_VERSION}
+  script:
+    - cd apps/api
+    - npx wrangler deploy --env production
+  environment:
+    name: production/api
+    url: https://api.inksight.workers.dev
+  only:
+    - main
+  needs:
+    - build
+
+deploy:email-worker:
+  stage: deploy
+  image: node:${NODE_VERSION}
+  script:
+    - cd apps/email-worker
+    - npx wrangler deploy --env production
+  environment:
+    name: production/email-worker
+  only:
+    - main
+  needs:
+    - build
+
+deploy:processor:
+  stage: deploy
+  image: node:${NODE_VERSION}
+  script:
+    - cd apps/processor
+    - npx wrangler deploy --env production
+  environment:
+    name: production/processor
+  only:
+    - main
+  needs:
+    - build
+
+deploy:web:
+  stage: deploy
+  image: node:${NODE_VERSION}
+  script:
+    - cd apps/web
+    - npm run deploy
+  environment:
+    name: production/web
+    url: https://inksight.app
+  only:
+    - main
+  needs:
+    - build
