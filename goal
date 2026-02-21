@@ -1,74 +1,175 @@
-# Inksight Project Goals
+# Inksight: Intelligent Email Intelligence Platform
 
-## Core Objective
-Transform chaotic email inbox into an intelligent, structured personal data warehouse with natural language interaction capabilities.
+## Project Overview
+
+**Name:** Inksight (智墨)  
+**Tagline:** Writing with Context, Reading with Insight  
+**Type:** Personal Data Intelligence Platform  
+**Status:** Architecture Design Phase  
+**Version:** 1.0
+
+## Vision Statement
+
+Inksight transforms the chaotic email inbox into an intelligent, structured, SQL-queryable personal data warehouse with natural language interaction capabilities. It acts as a "cyber personal assistant" that automatically extracts, categorizes, and makes actionable insights from email communications.
+
+## Problem Statement
+
+Modern professionals receive hundreds of emails daily containing valuable structured data (financial transactions, travel bookings, newsletters) trapped in unstructured formats. Traditional email clients offer no intelligence layer to:
+- Automatically extract and categorize information
+- Enable semantic search across historical communications
+- Generate contextual insights and summaries
+- Provide natural language query interfaces
+
+## Solution Architecture
+
+### Core Components
+
+**1. Data Ingestion Layer**
+- Cloudflare Email Routing for serverless email capture
+- JMAP/IMAP sync daemon for legacy mailbox support
+- Real-time CDC (Change Data Capture) pipeline
+
+**2. AI Processing Pipeline**
+- Five-way classification engine (newsletter/financial/travel/personal/spam)
+- Multi-modal entity extraction (text, PDF, images)
+- Workers AI integration (Llama 3, Whisper, Vision models)
+
+**3. Storage Architecture**
+- D1: Structured metadata and extracted entities
+- R2: Raw email archives (.eml files, attachments)
+- Vectorize: Semantic embeddings for RAG
+- KV: Configuration and caching
+
+**4. Security Framework**
+- WebAuthn passwordless authentication
+- Envelope encryption for credentials
+- Row-level security for multi-tenancy
+- Zero-trust architecture
+
+**5. User Interface**
+- E-ink inspired minimalist design
+- Natural language query interface (Omnibar)
+- Generative widgets (dynamic charts, summaries)
+- Human-in-the-loop feedback system
+
+**6. Automation Engine**
+- Daily morning brief generation
+- Context-aware smart reply suggestions
+- Webhook integrations for external services
+- Multi-channel notifications (Telegram, WeChat)
 
 ## Key Features
 
-### 1. Intelligent Email Processing
-- Automatic classification into 5 categories (newsletter, financial, travel, personal, spam)
-- Entity extraction from emails (merchants, amounts, dates, destinations)
-- Multimodal support (text, PDF, images)
+### Intelligent Classification
+Automatically categorize emails into:
+- **Newsletter:** Content subscriptions and updates
+- **Financial:** Transactions, receipts, invoices
+- **Travel:** Bookings, confirmations, itineraries
+- **Personal:** Human correspondence
+- **Spam:** Unwanted advertisements
 
-### 2. Structured Data Storage
-- Financial transactions tracking
-- Travel bookings management
-- Newsletter content summarization
-- Personal correspondence archiving
+### Entity Extraction
+Extract structured data:
+- Financial: merchant, amount, currency, date
+- Travel: destination, dates, booking reference, carrier
+- Newsletter: title, summary, key bullet points
 
-### 3. Semantic Search & RAG
-- Vector-based semantic search across all emails
-- Natural language queries: "show me coffee expenses last month"
-- Context-aware smart reply generation
+### Semantic Search
+- Vector-based similarity search
+- Natural language queries: "coffee expenses last month"
+- Context-aware result ranking
 
-### 4. Security & Privacy
-- Passwordless authentication (WebAuthn/FIDO2)
-- Envelope encryption for credentials
-- Multi-tenant row-level security
-- Zero-trust architecture
+### Smart Actions
+- Auto-generate reply drafts with tone matching
+- Schedule reminders for upcoming trips
+- Aggregate spending reports
+- Push insights to external tools
 
-### 5. Generative UI
-- E-ink inspired minimalist design
-- Dynamic chart generation from queries
-- Natural language command interface
-- Human-in-the-loop feedback system
+## Technical Stack
 
-### 6. Automation & Integration
-- Daily morning brief generation
-- Smart reply suggestions
-- Webhook integrations with external services
-- Telegram/WeChat notifications
-
-## Technical Principles
-
-- **Serverless-first:** Cloudflare Workers for compute
-- **Event-driven:** Async processing pipeline
-- **Multi-modal storage:** D1 + R2 + Vectorize
-- **AI-powered:** Workers AI for classification and extraction
-- **Security-first:** Zero-trust, encrypted credentials
-- **Scalable:** Multi-tenant from day one
+**Compute:** Cloudflare Workers, Workflows  
+**Storage:** D1, R2, Vectorize, KV  
+**AI/ML:** Workers AI (Llama 3, BGE, Whisper)  
+**Frontend:** Next.js, React  
+**Auth:** WebAuthn, JWT  
+**API:** Hono framework  
 
 ## Success Metrics
 
-- Email processing latency < 5 seconds
-- Classification accuracy > 95%
-- Entity extraction precision > 90%
-- Query response time < 500ms
-- Zero credential leaks
-- 100% data isolation between users
+- Email processing latency: < 5 seconds
+- Classification accuracy: > 95%
+- Entity extraction precision: > 90%
+- Query response time: < 500ms
+- Security: Zero credential leaks
+- Isolation: 100% data separation between users
+
+## Development Roadmap
+
+### Phase 1: MVP (Weeks 1-4)
+- Email ingestion via Cloudflare Email Routing
+- Basic AI classification (5 categories)
+- Financial entity extraction
+- D1 schema implementation
+- Simple query API
+- Minimal web UI
+
+### Phase 2: Intelligence Layer (Weeks 5-8)
+- Full entity extraction (all categories)
+- Vectorize integration
+- Semantic search implementation
+- Smart reply generation
+- Morning brief automation
+
+### Phase 3: Production Ready (Weeks 9-12)
+- WebAuthn authentication
+- Multi-tenant isolation
+- JMAP/IMAP sync daemon
+- Generative UI with charts
+- Webhook integrations
+- Performance optimization
 
 ## Non-Goals
 
-- Not a full email client (no composition UI)
+- Not a full-featured email client (no composition UI)
 - Not a replacement for primary mailbox
-- Not a spam filter (classification only)
-- Not a backup service (R2 is cache, not archive)
+- Not a spam filtering service
+- Not a long-term backup solution
 
 ## Future Enhancements
 
-- Mobile app with push notifications
+- Mobile applications with push notifications
 - Voice command interface
-- Predictive insights (spending patterns, travel trends)
+- Predictive analytics (spending patterns, travel trends)
 - Multi-mailbox aggregation
 - Calendar integration
 - Contact relationship mapping
+- Browser extension for quick access
+
+## Team & Collaboration
+
+**Development Principles:**
+- Serverless-first architecture
+- Event-driven design patterns
+- Security by default
+- Minimal viable implementations
+- Continuous deployment
+
+**Code Standards:**
+- All code and documentation in English
+- Git commits: single line, < 10 words
+- Modern project structure (monorepo)
+- Comprehensive error handling
+
+## License & Privacy
+
+- Private project (not open source)
+- User data never shared or sold
+- End-to-end encryption for credentials
+- GDPR/CCPA compliant design
+- User data deletion on request
+
+---
+
+**Last Updated:** 2026-02-22  
+**Document Version:** 1.0  
+**Status:** Active Development
