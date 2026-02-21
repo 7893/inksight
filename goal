@@ -1,0 +1,74 @@
+# Inksight Project Goals
+
+## Core Objective
+Transform chaotic email inbox into an intelligent, structured personal data warehouse with natural language interaction capabilities.
+
+## Key Features
+
+### 1. Intelligent Email Processing
+- Automatic classification into 5 categories (newsletter, financial, travel, personal, spam)
+- Entity extraction from emails (merchants, amounts, dates, destinations)
+- Multimodal support (text, PDF, images)
+
+### 2. Structured Data Storage
+- Financial transactions tracking
+- Travel bookings management
+- Newsletter content summarization
+- Personal correspondence archiving
+
+### 3. Semantic Search & RAG
+- Vector-based semantic search across all emails
+- Natural language queries: "show me coffee expenses last month"
+- Context-aware smart reply generation
+
+### 4. Security & Privacy
+- Passwordless authentication (WebAuthn/FIDO2)
+- Envelope encryption for credentials
+- Multi-tenant row-level security
+- Zero-trust architecture
+
+### 5. Generative UI
+- E-ink inspired minimalist design
+- Dynamic chart generation from queries
+- Natural language command interface
+- Human-in-the-loop feedback system
+
+### 6. Automation & Integration
+- Daily morning brief generation
+- Smart reply suggestions
+- Webhook integrations with external services
+- Telegram/WeChat notifications
+
+## Technical Principles
+
+- **Serverless-first:** Cloudflare Workers for compute
+- **Event-driven:** Async processing pipeline
+- **Multi-modal storage:** D1 + R2 + Vectorize
+- **AI-powered:** Workers AI for classification and extraction
+- **Security-first:** Zero-trust, encrypted credentials
+- **Scalable:** Multi-tenant from day one
+
+## Success Metrics
+
+- Email processing latency < 5 seconds
+- Classification accuracy > 95%
+- Entity extraction precision > 90%
+- Query response time < 500ms
+- Zero credential leaks
+- 100% data isolation between users
+
+## Non-Goals
+
+- Not a full email client (no composition UI)
+- Not a replacement for primary mailbox
+- Not a spam filter (classification only)
+- Not a backup service (R2 is cache, not archive)
+
+## Future Enhancements
+
+- Mobile app with push notifications
+- Voice command interface
+- Predictive insights (spending patterns, travel trends)
+- Multi-mailbox aggregation
+- Calendar integration
+- Contact relationship mapping
