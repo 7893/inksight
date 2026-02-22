@@ -2,14 +2,21 @@
 
 ## [未发布]
 
+### 变更
+- 合并 API 与前端到单一 Worker `inksight`（原 `inksight-api`）
+- 删除 Cloudflare Pages 项目，前端由 Worker 直接服务
+- Worker URL：`inksight.53.workers.dev`
+- 初始化 D1 数据库 schema（8 张表）
+- 添加 `pnpm-workspace.yaml`
+- 填入 wrangler.toml 真实资源 ID（D1, KV）
+
 ### 新增
 - Terraform 基础设施配置
 - D1 数据库：`inksight-d1`
 - R2 存储桶：`inksight-r2`（标准存储类）
 - KV 命名空间：`inksight-kv`
 - Vectorize 索引：`inksight-vectorize`（768维, cosine）
-- Workers：`inksight-api`, `inksight-email`, `inksight-processor`
-- Pages 项目：`inksight`
+- Workers：`inksight`, `inksight-email`, `inksight-processor`
 - 项目文档结构（`docs/`）
 
 ## [0.1.0] - 2026-02-22

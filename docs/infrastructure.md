@@ -1,39 +1,61 @@
-# 基础设施
+# Infrastructure
 
-## 资源命名规范
+## Resource Naming
 
-所有资源使用 `inksight-<组件>` 格式命名。
+All resources use `inksight-<component>` format.
 
-## Cloudflare 资源清单
+## Cloudflare Resources
 
-| 类型 | 名称 | ID |
+| Type | Name | ID |
 |------|------|-----|
-| D1 数据库 | `inksight-d1` | `9fa9fc89-8336-48d8-b633-b0ed90ee8a4e` |
-| R2 存储桶 | `inksight-r2` | 标准存储类 |
-| KV 命名空间 | `inksight-kv` | `8c3c6a22dd1248278a1289d36acd6cdd` |
-| Vectorize 索引 | `inksight-vectorize` | 768 维, cosine |
-| Worker (API) | `inksight-api` | - |
-| Worker (邮件) | `inksight-email` | - |
-| Worker (处理器) | `inksight-processor` | - |
-| Pages (前端) | `inksight` | - |
+| D1 Database | `inksight-d1` | `9fa9fc89-8336-48d8-b633-b0ed90ee8a4e` |
+| R2 Bucket | `inksight-r2` | Standard storage class |
+| KV Namespace | `inksight-kv` | `8c3c6a22dd1248278a1289d36acd6cdd` |
+| Vectorize Index | `inksight-vectorize` | 768 dim, cosine |
+| Worker (App) | `inksight` | Frontend + API |
+| Worker (Email) | `inksight-email` | Email ingestion |
+| Worker (Processor) | `inksight-processor` | AI pipeline |
 
-## IaC 管理
+## Architecture Notes
 
-- Terraform 管理 Cloudflare 资源（`infra/` 目录）
-- Vectorize 通过 wrangler CLI 管理（Terraform 暂不支持）
+- Frontend static assets are served by the `inksight` Worker (from R2/KV), no separate Pages project.
+- API routes live under `/api/*` in the same Worker.
+- URL: `inksight.53.workers.dev`
 
-## 常用命令
+## Database Schema
+
+D1 database initialized with 8 tables:
+
+| Table | Purpose |
+|-------|---------|
+| `users` | User accounts |
+| `emails` | Email metadata |
+| `finance` | Financial transactions |
+| `trips` | Travel bookings |
+| `news` | Newsletter summaries |
+| `embeddings` | Vector search metadata |
+| `user_credentials` | Encrypted credentials |
+| `audit_log` | Audit trail |
+
+Schema source: `schema.sql` in project root.
+
+## IaC
+
+- Terraform manages Cloudflare resources (`infra/` directory)
+- Vectorize managed via wrangler CLI (Terraform not yet supported)
+
+## Common Commands
 
 ```bash
-# 初始化 terraform
+# Init terraform
 cd infra && terraform init
 
-# 查看变更计划
+# Plan changes
 terraform plan
 
-# 应用变更（需审批）
+# Apply changes
 terraform apply
 
-# 创建 vectorize 索引
+# Create vectorize index
 wrangler vectorize create inksight-vectorize --dimensions=768 --metric=cosine
 ```

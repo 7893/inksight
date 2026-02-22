@@ -1,24 +1,24 @@
-name = "inksight-api"
+name = "inksight"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 
 [env.production]
-name = "inksight-api"
+name = "inksight"
 workers_dev = false
 
 [[d1_databases]]
 binding = "DB"
-database_name = "inksight"
-database_id = "TBD"
+database_name = "inksight-d1"
+database_id = "9fa9fc89-8336-48d8-b633-b0ed90ee8a4e"
 
-[[vectorize]]
-binding = "VECTORIZE"
-index_name = "inksight-embeddings"
+# [[vectorize]]
+# binding = "VECTORIZE"
+# index_name = "inksight-embeddings"
 
 [[r2_buckets]]
 binding = "STORAGE"
-bucket_name = "inksight-emails"
+bucket_name = "inksight-r2"
 
 [[kv_namespaces]]
 binding = "KV"
-id = "TBD"
+id = "8c3c6a22dd1248278a1289d36acd6cdd"

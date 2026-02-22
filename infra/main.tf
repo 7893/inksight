@@ -36,9 +36,9 @@ resource "cloudflare_workers_kv_namespace" "kv" {
 # Workers
 # =============================================================================
 
-resource "cloudflare_workers_script" "api" {
+resource "cloudflare_workers_script" "app" {
   account_id = var.account_id
-  name       = "inksight-api"
+  name       = "inksight"
   content    = file("${path.module}/workers/placeholder.js")
   module     = true
 
@@ -93,22 +93,6 @@ resource "cloudflare_workers_script" "processor" {
 }
 
 # =============================================================================
-# Pages (Frontend)
-# =============================================================================
-
-resource "cloudflare_pages_project" "web" {
-  account_id        = var.account_id
-  name              = "inksight"
-  production_branch = "main"
-
-  build_config {
-    build_command   = "npm run build"
-    destination_dir = "out"
-    root_dir        = "apps/web"
-  }
-}
-
-# =============================================================================
 # Outputs
 # =============================================================================
 
@@ -122,8 +106,4 @@ output "r2_bucket_name" {
 
 output "kv_namespace_id" {
   value = cloudflare_workers_kv_namespace.kv.id
-}
-
-output "pages_project_name" {
-  value = cloudflare_pages_project.web.name
 }
