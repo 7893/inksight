@@ -64,3 +64,4 @@ wrangler.toml.local
 *.key
 *.pem
 credentials.json
+talk
