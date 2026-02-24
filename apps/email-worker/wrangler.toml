@@ -1,0 +1,24 @@
+name = "inksight-email"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[triggers]
+crons = ["* * * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "inksight-d1"
+database_id = "9fa9fc89-8336-48d8-b633-b0ed90ee8a4e"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "inksight-r2"
+
+[[queues.producers]]
+binding = "EMAIL_QUEUE"
+queue = "inksight-email-queue"
+
+[[queues.consumers]]
+queue = "inksight-email-queue"
+max_batch_size = 10
+max_retries = 3

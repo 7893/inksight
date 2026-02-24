@@ -9,6 +9,10 @@
 - 初始化 D1 数据库 schema（8 张表）
 - 添加 `pnpm-workspace.yaml`
 - 填入 wrangler.toml 真实资源 ID（D1, KV）
+- 邮件接入改为 IMAP 拉取模式（用户登录邮箱密码）
+- email-worker 架构：Cron 每分钟派发 → Queue 并发消费 → IMAP 拉取
+- 新增 Cloudflare Queue `inksight-email-queue`
+- D1 user_credentials 表新增 imap_host, imap_port, last_sync_uid, sync_enabled 字段
 
 ### 新增
 - Terraform 基础设施配置

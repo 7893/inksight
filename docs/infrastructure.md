@@ -12,6 +12,7 @@ All resources use `inksight-<component>` format.
 | R2 Bucket | `inksight-r2` | Standard storage class |
 | KV Namespace | `inksight-kv` | `8c3c6a22dd1248278a1289d36acd6cdd` |
 | Vectorize Index | `inksight-vectorize` | 768 dim, cosine |
+| Queue | `inksight-email-queue` | Email sync task dispatch |
 | Worker (App) | `inksight` | Frontend + API |
 | Worker (Email) | `inksight-email` | Email ingestion |
 | Worker (Processor) | `inksight-processor` | AI pipeline |
@@ -34,7 +35,7 @@ D1 database initialized with 8 tables:
 | `trips` | Travel bookings |
 | `news` | Newsletter summaries |
 | `embeddings` | Vector search metadata |
-| `user_credentials` | Encrypted credentials |
+| `user_credentials` | Encrypted IMAP credentials + sync state |
 | `audit_log` | Audit trail |
 
 Schema source: `schema.sql` in project root.

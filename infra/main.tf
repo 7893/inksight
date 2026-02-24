@@ -58,6 +58,11 @@ resource "cloudflare_workers_script" "app" {
   }
 }
 
+resource "cloudflare_queue" "email_queue" {
+  account_id = var.account_id
+  name       = "inksight-email-queue"
+}
+
 resource "cloudflare_workers_script" "email" {
   account_id = var.account_id
   name       = "inksight-email"
@@ -72,6 +77,11 @@ resource "cloudflare_workers_script" "email" {
   r2_bucket_binding {
     name        = "STORAGE"
     bucket_name = cloudflare_r2_bucket.storage.name
+  }
+
+  queue_binding {
+    binding = "EMAIL_QUEUE"
+    queue   = cloudflare_queue.email_queue.name
   }
 }
 
@@ -106,4 +116,8 @@ output "r2_bucket_name" {
 
 output "kv_namespace_id" {
   value = cloudflare_workers_kv_namespace.kv.id
+}
+
+output "queue_id" {
+  value = cloudflare_queue.email_queue.id
 }
